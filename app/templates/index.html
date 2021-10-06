@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>CoE Budget IDR</h1>
+
+<p>Please fill out the fields below to run the budgeting model</p>
+
+<form>
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname"><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname">
+</form><br>
+
+<button class="add_benchmark_button" onclick="addRow()">Add More Benchmark Fields</button>
+
+<div class="row">
+	<form>
+		<label for="function">Function benchmarked:</label>
+		<input class="function_input" type="text" name="mytext[]"/>&nbsp;&nbsp;
+		<label for ="Benchmark">Type:&nbsp;</label>
+		<select class="BM" name="BM" id="BM">
+			<option value="TNMM">TNMM</option>
+			<option value="CUP">CUP</option>
+			<option value="Financial">Financial</option>
+		</select>&nbsp;&nbsp;
+		<label for ="Number_Benchmarks">How many?&nbsp;</label>
+		<select name="number" id="number">
+			<option value=1>1</option>
+			<option value=2>2</option>
+			<option value=3>3</option>
+		</select>&nbsp;
+		<input type="radio" id="FU" name="FU_New" value="Financial Update">
+		<label for="financial)update">Financial Update</label>
+		<input type="radio" id="new" name="FU_New" value="New Search">
+		<label for="new">New Search</label>
+	</form>
+	<button class="remove_benchmark" onclick="removeRow(this)">Remove</button>
+</div>
+
+<br>
+<div>
+	<button onclick="submit()">On Submit</button>
+</div>
+
+
+
+
+<script>
+function insertAfter(newNode, referenceNode) {
+   referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
+function addRow() {
+	var temp = document.getElementsByClassName("row")[0];
+  var clon = temp.cloneNode(true);
+  insertAfter(clon, temp)
+}
+
+
+function removeRow(element) {
+	var all_remove_buttons = Array.prototype.slice.call(document.getElementsByClassName("remove_benchmark"));
+	var index = all_remove_buttons.indexOf(element)
+
+	if (document.getElementsByClassName("row").length == 1) {
+		alert("You must include at least one row of data.")
+	} else {
+		document.getElementsByClassName("row")[index].remove()
+	}
+}	
+
+
+function addReport() {
+  var temp = document.getElementsByTagName("template")[0];
+  var clon = temp.content.cloneNode(true);
+  document.body.appendChild(clon);
+}
+
+function addBenchmark() {
+  var temp = document.getElementsByTagName("template")[0];
+  var clon = temp.content.cloneNode(true);
+  document.body.appendChild(clon);
+}
+
+function submit(){
+	var fname = document.getElementById("fname").value
+	var lname = document.getElementById("lname").value
+
+	var rows = document.getElementsByClassName("row")
+	var data_list = []
+	for (var i = 0; i < rows.length; i++) {
+		var row = rows[i]
+		var function_input = row.getElementsByClassName("function_input")[0].value
+		var bm_selection = row.getElementsByClassName("BM")[0].value
+		data = {"function_input": function_input, "bm_selection": bm_selection}
+		data_list.push(data)
+	}
+	// console.log(data_list)
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/sendData");
+
+	xhr.setRequestHeader("Accept", "application/json");
+	var data = JSON.stringify({"fname": fname, "lname": lname, "data": data_list});
+	console.log(data)
+	xhr.send(data);
+}
+</script>
+
+</body>
+</html>
