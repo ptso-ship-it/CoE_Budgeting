@@ -20,8 +20,21 @@
 		<option value="West">West</option>
 		<option value="FSO">FSO</option>
 		<option value="Canada">Canada</option>
-	</select>
-
+	</select><br>
+	<label for="margin">Input margin target:</label>&nbsp;
+	<input type="number" value=50 min=5 max=100 step=5 name="margin" id="margin" required><span>%</span><br>
+	<label for="PMO">Select PMO level:</label>
+  <select name="PMO" id="PMO">
+		<option value="Low">Low</option>
+		<option value="Medium">Medium</option>
+		<option value="High">High</option>
+	</select><br>
+	<label for="BU">How many company overview sections?</label>&nbsp;
+	<input type="number" value=1 min=1 name="BU" id="BU" required><br>
+	<label for="functionals">How many functional profiles/entity characterization?</label>&nbsp;
+	<input type="number" value=1 min=1 name="functionals" id="functionals" required><br>
+	<label for="interviews">How many functional interviews?</label>&nbsp;
+	<input type="number" value=0 min=0 name="interviews" id="interviews" required>
 
 </form><br>
 
@@ -53,10 +66,8 @@
 
 <br>
 <div>
-	<button onclick="submit()">On Submit</button>
+	<button onclick="submit()">Run budgeting model</button>
 </div>
-
-
 
 
 <script>
@@ -100,7 +111,7 @@ function submit(){
 	var email = document.getElementById("email").value
 	var client = document.getElementById("client").value
 	var region = document.getElementById("region").value
-	var email = document.getElementById("email").value
+	var PMO = document.getElementById("PMO").value
 
 	var rows = document.getElementsByClassName("row")
 	var data_list = []
