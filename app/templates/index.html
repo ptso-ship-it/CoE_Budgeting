@@ -7,10 +7,22 @@
 <p>Please fill out the fields below to run the budgeting model</p>
 
 <form>
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname">
+  <label for="username">Please enter your name:</label>&nbsp;
+  <input type="text" id="username" name="username" required><br>
+  <label for="email">Email:</label>&nbsp;
+  <input type="text" id="email" name="email" required><br>
+  <label for="client">Client:</label>&nbsp;
+  <input type="text" id="client" name="client" required><br>
+  <label for="region">Region:</label>
+  <select name="region" id="region">
+		<option value="Central">Central</option>
+		<option value="East">East</option>
+		<option value="West">West</option>
+		<option value="FSO">FSO</option>
+		<option value="Canada">Canada</option>
+	</select>
+
+
 </form><br>
 
 <button class="add_benchmark_button" onclick="addRow()">Add More Benchmark Fields</button>
@@ -84,8 +96,11 @@ function addBenchmark() {
 }
 
 function submit(){
-	var fname = document.getElementById("fname").value
-	var lname = document.getElementById("lname").value
+	var username = document.getElementById("username").value
+	var email = document.getElementById("email").value
+	var client = document.getElementById("client").value
+	var region = document.getElementById("region").value
+	var email = document.getElementById("email").value
 
 	var rows = document.getElementsByClassName("row")
 	var data_list = []
@@ -102,7 +117,7 @@ function submit(){
 	xhr.open("POST", "/sendData");
 
 	xhr.setRequestHeader("Accept", "application/json");
-	var data = JSON.stringify({"fname": fname, "lname": lname, "data": data_list});
+	var data = JSON.stringify({"fname": username, "lname": lname, "data": data_list});
 	console.log(data)
 	xhr.send(data);
 }
