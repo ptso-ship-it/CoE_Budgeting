@@ -65,6 +65,34 @@
 </div>
 
 <br>
+
+<button class="add_report_button" onclick="addReportRow()">Add More Reports</button>
+
+<div class="rep_row">
+	<form>
+		<label for="Country">Country:</label>
+		<input class="Country" type="text" name="mytext[]"/>&nbsp;&nbsp;
+		<label for ="Benchmark">Type:&nbsp;</label>
+		<select class="Tier" name="Tier" id="Tier">
+			<option value="Standardized">Standardized</option>
+			<option value="CUP">Tactical</option>
+			<option value="Strategic_Central">Strategic - TP Web Template</option>
+			<option value="Strategic_Local">Strategic - Full Local Preparation</option>
+		</select>&nbsp;&nbsp;
+		<label for ="Number_Benchmarks">How many?&nbsp;</label>
+		<select name="number" id="number">
+			<option value=1>1</option>
+			<option value=2>2</option>
+			<option value=3>3</option>
+		</select>&nbsp;
+		<input type="radio" id="FU" name="FU_New" value="Financial Update">
+		<label for="financial)update">Financial Update</label>
+		<input type="radio" id="new" name="FU_New" value="New Search">
+		<label for="new">New Search</label>
+	</form>
+	<button class="remove_report" onclick="removeReportRow(this)">Remove</button>
+</div>
+
 <div>
 	<button onclick="submit()">Run budgeting model</button>
 </div>
@@ -132,6 +160,44 @@ function submit(){
 	console.log(data)
 	xhr.send(data);
 }
+</script>
+
+<script>
+function insertAfter_rep(newNode_rep, referenceNode_rep) {
+   referenceNode_rep.parentNode.insertBefore(newNode_rep, referenceNode_rep.nextSibling);
+}
+
+function addReportRow() {
+	var temp_report = document.getElementsByClassName("rep_row")[0];
+  var clon_report = temp_report.cloneNode(true);
+  insertAfter_rep(clon_report, temp_report)
+}
+
+
+function removeReportRow(element) {
+	var all_remove_buttons_report = Array.prototype.slice.call(document.getElementsByClassName("remove_report"));
+	var index = all_remove_buttons_report.indexOf(element)
+
+	if (document.getElementsByClassName("rep_row").length == 1) {
+		alert("You must include at least one row of data.")
+	} else {
+		document.getElementsByClassName("rep_row")[index].remove()
+	}
+}	
+
+
+function addReport_two() {
+  var temp_report = document.getElementsByTagName("template")[0];
+  var clon_report = temp_report.content.cloneNode(true);
+  document.body.appendChild(clon_report);
+}
+
+function addBenchmark_two() {
+  var temp_report = document.getElementsByTagName("template")[0];
+  var clon_report = temp_report.content.cloneNode(true);
+  document.body.appendChild(clon_report);
+}
+
 </script>
 
 </body>
